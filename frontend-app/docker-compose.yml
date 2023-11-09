@@ -1,0 +1,29 @@
+# Service Configuration
+services:
+  # Vue.js service configuration
+  vue:
+    # Keep STDIN open even if not attached
+    stdin_open: true
+    # Set the name of the container to "vue"
+    container_name: vue
+    # Always restart the container if it stops for any reason
+    restart: always
+    # Configure the build process for the Docker image
+    build:
+      context: ./
+      dockerfile: vue.dockerfile
+    # Attach the service to the specified Docker network
+    networks:
+      - backend-app_sail
+    # Set the environment variable inside the container
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    # Map port 8080 on the container to port 8080 on the host machine
+    ports:
+      - "8080:8080"
+
+# Network Configuration
+networks:
+  # Define an external Docker network
+  backend-app_sail:
+    external: true
